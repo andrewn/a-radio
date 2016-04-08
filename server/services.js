@@ -20,11 +20,11 @@ function indexById(obj, item) {
 }
 
 function getServices(endpoint) {
-  return fetch(endpoint)
+  return fetch(`${endpoint}/services.json`)
     .then(function(response) {
       return response.json();
     })
     .then(function(data) {
-      return data.stations;
+      return data.services;
     });
 }

@@ -31,8 +31,18 @@ module.exports = {
         loader: 'babel',
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
+      },
+      {
+        loader: 'style!css',
+        test: /\.css$/
       }
     ]
+  },
+  resolve: {
+    alias: {
+      'react': 'preact-compat',
+      'react-dom': 'preact-compat'
+    }
   },
   plugins: [
     isDevelopment ? new webpack.HotModuleReplacementPlugin() : null,

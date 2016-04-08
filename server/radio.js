@@ -5,11 +5,12 @@ var fetchServicesAndSetState = require('./services').fetchAndSetState;
 var config = require('./config');
 var assetServer = require('./asset-server');
 var apiServer = require('./api-server');
+var createPlayer = require('./player').create;
 
 var initialState = {
   currentService: null,
   services: {},
-  volume: null,
+  volume: 0,
   config: {}
 };
 
@@ -19,10 +20,12 @@ module.exports.create = function() {
     config: config()
   }));
 
+  var player = createPlayer(handleStateChange.bind(null, this.state));
+
   // Serve the web app
   var webPort = this.state.get('config', 'webPort');
   var server = assetServer();
-  apiServer(server, state, handleMessage);
+  apiServer(server, state, handleMessage.bind(null, player, state));
   server.listen(webPort);
 
   console.log('Listening on ', webPort);
@@ -30,6 +33,29 @@ module.exports.create = function() {
   fetchServicesAndSetState(this.state.select('config'), this.state.select('services'));
 }
 
-function handleMessage(msg) {
+function handleStateChange(state, playerState) {
+  console.log('playerState', playerState);
+}
+
+function handleMessage(player, state, msg) {
   console.log('Incoming message ', msg);
+  switch (msg.type) {
+    case 'serviceSelect':
+      return serviceSelect(player, state, msg.data);
+    case 'volume':
+      return volume(player, state, msg.data);
+    default:
+      return console.warn('No handler for message type: ', msg.type, msg);
+  }
+}
+
+function serviceSelect(player, state, id) {
+  const playlist = state.select('services', id, 'playlist').get();
+  player
+    .stream(playlist)
+    .then(() => state.select('currentService').set(id));
+}
+
+function volume(player, state, value) {
+  return player.volume(value);
 }

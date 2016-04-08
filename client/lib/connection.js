@@ -19,6 +19,12 @@ export function connect(onMessage) {
     destroy: function() {
       ws.removeEventListener('message', handler);
       ws.close();
+    },
+    send: function(type, data) {
+      ws.send(JSON.stringify({
+        type,
+        data
+      }));
     }
   }
 }

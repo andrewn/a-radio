@@ -1,4 +1,8 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-export function render(state) {
-  console.log('render: ', state);
+import App from '../components/App';
+
+export function render(state, dispatch) {
+  ReactDOM.render(<App state={state} dispatch={dispatch} />, document.getElementById('container'));
 }
