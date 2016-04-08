@@ -12,10 +12,13 @@
   "author": "Andrew Nicolaou <me@andrewnicolaou.co.uk>",
   "license": "Apache-2",
   "dependencies": {
+    "baobab": "^2.3.3",
     "bibimbap": "^0.1.4",
     "express": "~4.10.7",
+    "faye-websocket": "^0.11.0",
     "foreman": "~1.2.0",
     "isomorphic-fetch": "^2.2.1",
+    "lodash": "^4.8.2",
     "radiodan": "^1.0.0",
     "radiodan-broker": "^1.4.0",
     "radiodan-client": "^1.0.0"
