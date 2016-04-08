@@ -1,3 +1,5 @@
+import ReconnectingWebSocket from 'ReconnectingWebSocket';
+
 const handleMessage = callback => evt => {
   const data = evt.data;
   if (!data) {
@@ -11,7 +13,7 @@ const handleMessage = callback => evt => {
 }
 
 export function connect(onMessage) {
-  const ws = new WebSocket(window.location.origin.replace(window.location.protocol, 'ws://'));
+  const ws = new ReconnectingWebSocket(window.location.origin.replace(window.location.protocol, 'ws://'));
   const handler = handleMessage(onMessage);
   ws.addEventListener('message', handler);
 

@@ -26,6 +26,7 @@
     "radiodan-client": "^1.0.0"
   },
   "devDependencies": {
+    "ReconnectingWebSocket": "github:joewalnes/reconnecting-websocket",
     "babel-loader": "^6.2.4",
     "babel-preset-es2015-native-modules": "^6.6.0",
     "babel-preset-react": "^6.5.0",
