@@ -7,7 +7,10 @@ module.exports = function(server, state, onMessage) {
       var updateHandler = emitStateChange.bind(null, ws);
 
       // send complete state on new connection
-      ws.send(JSON.stringify(state.get()));
+      ws.send(JSON.stringify({
+        type: 'state',
+        data: state.get()
+      }));
 
       ws.on('message', function(evt) {
         onMessage(JSON.parse(evt.data));
@@ -29,7 +32,10 @@ module.exports = function(server, state, onMessage) {
 function emitStateChange(ws, e) {
   var eventData = e.data;
 
-  ws.send(JSON.stringify(eventData));
+  ws.send(JSON.stringify({
+    type: 'update',
+    data: eventData
+  }));
 // console.log('Current data:', eventData.currentData);
 // console.log('Previous data:', eventData.previousData);
 // console.log('Transaction details:', eventData.transaction);
