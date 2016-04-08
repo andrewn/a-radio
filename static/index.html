@@ -5,11 +5,6 @@
   <title>A Radio</title>
 </head>
 <body class="container">
-  <script>
-    var ws = new WebSocket(window.location.origin.replace(window.location.protocol, 'ws://'));
-    ws.addEventListener('message', function (data) {
-      console.log('message', data);
-    });
-  </script>
+  <script src="/bundle.js"></script>
 </body><!-- .container -->
 </html>

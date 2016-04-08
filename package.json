@@ -5,9 +5,11 @@
   "main": "main.js",
   "scripts": {
     "start": "node_modules/.bin/nf start",
+    "dev": "NODE_ENV=development nf start",
     "broker": "radiodan-broker",
     "audio": "radiodan-server ../../config/radiodan-config.json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "author": "Andrew Nicolaou <me@andrewnicolaou.co.uk>",
   "license": "Apache-2",
@@ -22,5 +24,13 @@
     "radiodan": "^1.0.0",
     "radiodan-broker": "^1.4.0",
     "radiodan-client": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015-native-modules": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "webpack": "^2.1.0-beta.4",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-hot-middleware": "^2.10.0"
   }
 }
