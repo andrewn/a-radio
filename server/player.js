@@ -14,6 +14,7 @@ module.exports.create = function(onStateChange) {
     stream: function(url) {
       return player
         .load({
+          clear: true,
           playlist: url
         })
         .then(player.play);
