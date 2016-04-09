@@ -2,9 +2,9 @@ var Baobab = require('baobab');
 var assign = require('lodash/assign');
 
 var fetchServicesAndSetState = require('./services').fetchAndSetState;
-var config = require('./config');
-var assetServer = require('./asset-server');
-var apiServer = require('./api-server');
+var config = require('../lib/config');
+var assetServer = require('../servers/asset-server');
+var apiServer = require('../servers/api-server');
 var createPlayer = require('./player').create;
 
 var initialState = {
@@ -85,17 +85,4 @@ function power(player, state) {
       serviceSelect(player, state, lastServiceCursor.get());
     }
   }
-// const powerCursor = state.select('power');
-// const power = cursor.get();
-// const currentService = state.select('currentService').get();
-// const lastServiceCursor = state.select('lastService');
-// const lastService = lastServiceCursor.get();
-// if (power === true) {
-//   player.stop();
-//   powerCursor.set(false);
-//   lastServiceCursor.set(currentService);
-// } else if (lastService != null) {
-//   serviceSelect(player, state, lastService);
-//   powerCursor.set(true);
-// }
 }

@@ -1,6 +1,6 @@
 var forEach = require('lodash/forEach');
 
-var config = require('../config/radio.json');
+var config = require('../../config/radio.json');
 
 module.exports = function() {
   var config = {

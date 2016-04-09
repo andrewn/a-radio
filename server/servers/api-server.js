@@ -31,13 +31,8 @@ module.exports = function(server, state, onMessage) {
 
 function emitStateChange(ws, e) {
   var eventData = e.data;
-
   ws.send(JSON.stringify({
     type: 'update',
     data: eventData
   }));
-// console.log('Current data:', eventData.currentData);
-// console.log('Previous data:', eventData.previousData);
-// console.log('Transaction details:', eventData.transaction);
-// console.log('Affected paths', eventData.paths);
 }

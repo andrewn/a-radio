@@ -12,7 +12,7 @@ module.exports = function(app) {
     webpackDevMiddleware = require('webpack-dev-middleware');
     webpackHotMiddleware = require('webpack-hot-middleware');
     webpack = require('webpack');
-    config = require('../webpack.config.js');
+    config = require('../../webpack.config.js');
   } catch (e) {}
 
   var compiler = webpack(config);
