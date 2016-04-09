@@ -3,9 +3,9 @@ import React from 'react';
 import styles from './styles.css';
 
 const Service = ({title, logos, active=false, onClick}) => {
-  const logo = active ? logos.active : logos.inactive;
-  return <div className="service-list-service" onClick={onClick}>
-    <img className="service-list-image" src={logo} title={title}/>
+  return <div className={`service-list-service ${active ? 'is-active' : 'is-inactive'}`} onClick={onClick}>
+    <img className="service-list-image service-list-image-active" src={logos.active} title={title}/>
+    <img className="service-list-image service-list-image-inactive" src={logos.inactive} title={title}/>
   </div>;
 }
 

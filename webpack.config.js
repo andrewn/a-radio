@@ -1,7 +1,7 @@
 /* global __dirname */
 
 var resolve = require('path').resolve;
-
+var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
 // var CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -33,7 +33,7 @@ module.exports = {
         exclude: /(node_modules)/,
       },
       {
-        loader: 'style!css',
+        loader: 'style!css!postcss',
         test: /\.css$/
       }
     ]
@@ -57,6 +57,9 @@ module.exports = {
     // Nice colored output
     colors: true
   },
+  postcss: function() {
+    return [autoprefixer];
+  }
 // Create source maps for the bundle
 // devtool: 'source-map',
 };

@@ -8,9 +8,49 @@
 }
 
 .service-list-service {
-  width: auto;
+  position: relative;
+  width: 10vw;
+  height: 10vw;
+
+  display: flex;
+  align-items: center;
+
+  transition: transform 0.2s ease-out;
+  transform: scale(0.9);
+}
+
+.service-list-service.is-active {
+  transform: scale(1);
 }
 
 .service-list-image {
-  width: inherit;
+  position: absolute;
+
+  width: 10vw;
+
+  transition: opacity 0.3s ease-out;
+}
+
+.service-list-service .service-list-image-inactive {
+  z-index: 0;
+}
+
+.service-list-service .service-list-image-active {
+  z-index: 1;
+}
+
+.service-list-service.is-inactive:hover {
+  transform: scale(0.95);
+}
+
+.service-list-service.is-inactive:hover .service-list-image-active {
+  opacity: 0.6;
+}
+
+.service-list-service.is-inactive .service-list-image-active {
+  opacity: 0;
+}
+
+.service-list-service.is-active .service-list-image-inactive {
+  opacity: 0;
 }
