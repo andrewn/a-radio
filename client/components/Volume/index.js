@@ -4,8 +4,15 @@ export default class Volume extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0
+      value: props.value
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.value !== this.state.value) {
+      this.setState({
+        value: nextProps.value
+      });
+    }
   }
   render({value, onChange}) {
     const handleChange = evt => {

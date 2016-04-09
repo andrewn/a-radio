@@ -6,9 +6,9 @@ module.exports.create = function(onStateChange) {
   // Get the player object called `main`
   // as specified in ./config/radiodan-config.json
   var player = radiodan.player.get('main');
-  var audio = radiodan.audio.get('default');
+  // var audio = radiodan.audio.get('default');
 
-  player.on('state', onStateChange);
+  player.on('volume', onStateChange);
 
   return {
     stream: function(url) {
@@ -20,12 +20,19 @@ module.exports.create = function(onStateChange) {
         .then(player.play);
     },
     volume: function(value) {
-      return audio.volume({
+      return player.volume({
         value: value
       });
     },
     stop: function() {
       return player.stop();
+    },
+    status: function() {
+      return player
+        .status()
+        .then(function(state) {
+          onStateChange(state.response.player);
+        });
     }
   }
 }

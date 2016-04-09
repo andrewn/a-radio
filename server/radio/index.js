@@ -32,11 +32,16 @@ module.exports.create = function() {
 
   console.log('Listening on ', webPort);
 
+  player.status(); // triggers state change with current status
+
   fetchServicesAndSetState(this.state.select('config'), this.state.select('services'));
 }
 
 function handleStateChange(state, playerState) {
-  console.log('playerState', playerState);
+  var volume = parseInt(playerState.volume, 10);
+  if (volume != null) {
+    state.select('volume').set(volume);
+  }
 }
 
 function handleMessage(player, state, msg) {
