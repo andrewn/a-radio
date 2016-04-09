@@ -8,7 +8,9 @@ var apiServer = require('./api-server');
 var createPlayer = require('./player').create;
 
 var initialState = {
+  power: false,
   currentService: null,
+  lastService: null,
   services: {},
   volume: 0,
   config: {}
@@ -44,12 +46,18 @@ function handleMessage(player, state, msg) {
       return serviceSelect(player, state, msg.data);
     case 'volume':
       return volume(player, state, msg.data);
+    case 'power':
+      return power(player, state, msg.data);
     default:
       return console.warn('No handler for message type: ', msg.type, msg);
   }
 }
 
 function serviceSelect(player, state, id) {
+  const powerValue = state.select('power').get();
+  if (powerValue === false) {
+    power(player, state);
+  }
   const playlist = state.select('services', id, 'playlist').get();
   player
     .stream(playlist)
@@ -58,4 +66,36 @@ function serviceSelect(player, state, id) {
 
 function volume(player, state, value) {
   return player.volume(value);
+}
+
+function power(player, state) {
+  const powerCursor = state.select('power');
+  const lastServiceCursor = state.select('lastService');
+  const currentServiceCursor = state.select('currentService');
+
+  if (powerCursor.get() === true) {
+    player.stop();
+    powerCursor.set(false);
+    // remember last service
+    lastServiceCursor.set(currentServiceCursor.get());
+  } else {
+    powerCursor.set(true);
+
+    if (lastServiceCursor.get()) {
+      serviceSelect(player, state, lastServiceCursor.get());
+    }
+  }
+// const powerCursor = state.select('power');
+// const power = cursor.get();
+// const currentService = state.select('currentService').get();
+// const lastServiceCursor = state.select('lastService');
+// const lastService = lastServiceCursor.get();
+// if (power === true) {
+//   player.stop();
+//   powerCursor.set(false);
+//   lastServiceCursor.set(currentService);
+// } else if (lastService != null) {
+//   serviceSelect(player, state, lastService);
+//   powerCursor.set(true);
+// }
 }

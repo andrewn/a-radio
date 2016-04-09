@@ -23,6 +23,9 @@ module.exports.create = function(onStateChange) {
       return audio.volume({
         value: value
       });
+    },
+    stop: function() {
+      return player.stop();
     }
   }
 }
