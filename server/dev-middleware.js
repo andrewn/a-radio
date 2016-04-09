@@ -16,6 +16,8 @@ module.exports = function(app) {
   } catch (e) {}
 
   var compiler = webpack(config);
-  app.use(webpackDevMiddleware(compiler, {}));
+  app.use(webpackDevMiddleware(compiler, {
+    noInfo: true
+  }));
   app.use(webpackHotMiddleware(compiler));
 }
