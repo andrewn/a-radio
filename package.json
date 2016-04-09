@@ -21,7 +21,7 @@
     "foreman": "~1.2.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.8.2",
-    "radiodan": "^1.0.0",
+    "radiodan": "radiodan/radiodan.js",
     "radiodan-broker": "^1.4.0",
     "radiodan-client": "^1.0.0"
   },
