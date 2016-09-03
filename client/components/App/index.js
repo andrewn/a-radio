@@ -5,9 +5,11 @@ import ServiceList from '../ServiceList';
 import Volume from '../Volume';
 import Power from '../Power';
 
+import styles from './styles.css';
+
 export default function ({state, dispatch}) {
   return <div className="app">
-    <Power onPower={ () => dispatch('power') } /> {state.power === true ? '(On)' : '(Off)'}
+    <Power onPower={ () => dispatch('power') } isOn={ state.power } />
     <Volume value={state.volume} onChange={ vol => dispatch('volume', vol)} />
     <ServiceList
     services={values(state.services)}

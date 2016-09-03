@@ -1,5 +1,7 @@
 import React from 'react';
 
-export default function ({onPower}) {
-  return <button onClick={onPower}>Power</button>
+import styles from './styles.css';
+
+export default function ({onPower, isOn=false}) {
+  return <button className={ `power ${ isOn === true ? 'is-on' : 'is-off' }` } onClick={onPower}>Power</button>
 }

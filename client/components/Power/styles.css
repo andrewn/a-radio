@@ -1,0 +1,30 @@
+.power {
+  padding: 0.5rem 1rem;
+
+  border: 2px solid #333;
+  border-radius: 5px;
+
+  font-size: 1rem;
+
+  background-color: transparent;
+}
+
+.power.is-on {
+  border-color: hsl(154, 95%, 35%);
+  color: hsl(154, 95%, 35%);
+}
+
+.power.is-on:hover {
+  border-color: hsl(154, 95%, 45%);
+  color: hsl(154, 95%, 45%);
+}
+
+.power.is-off {
+  border-color: hsl(10, 85%, 40%);
+  color: hsl(10, 85%, 40%);
+}
+
+.power.is-off:hover {
+  border-color: hsl(10, 85%, 55%);
+  color: hsl(10, 85%, 55%);
+}
