@@ -1,0 +1,29 @@
+.stepped-range {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stepped-range--step-wrapper {
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin-right: 3px;
+}
+
+.step {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: gray;
+}
+
+.step.is-active {
+  background-color: green;
+}
+
+.step:hover:not(is-active) {
+  background-color: rgba(0, 255, 0, 0.5);
+}

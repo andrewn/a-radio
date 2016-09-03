@@ -1,5 +1,9 @@
 import React from 'react';
 
+import SteppedRange from '../SteppedRange';
+
+const InputRange = (props) => <input type="range" { ...props } />
+
 export default class Volume extends React.Component {
   constructor(props) {
     super(props);
@@ -23,7 +27,7 @@ export default class Volume extends React.Component {
       onChange(value);
     }
     return <div className="volume">
-      <input type="range" min="0" max="100" step="5" value={ this.state.value } onChange={ handleChange } />
+      <SteppedRange min="0" max="100" step="5" value={ this.state.value } onChange={ handleChange } />
     </div>;
   }
 }
