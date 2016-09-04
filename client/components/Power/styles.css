@@ -12,6 +12,8 @@
   font-size: 1rem;
 
   background-color: transparent;
+
+  cursor: pointer;
 }
 
 .power.is-on {
