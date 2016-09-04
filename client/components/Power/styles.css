@@ -1,8 +1,13 @@
 .power {
-  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 3rem;
+  width: 3rem;
 
   border: 2px solid #333;
-  border-radius: 5px;
+  border-radius: 50%;
 
   font-size: 1rem;
 
@@ -14,9 +19,17 @@
   color: hsl(154, 95%, 35%);
 }
 
+.power.is-on .power-icon svg {
+  fill: hsl(154, 95%, 35%);
+}
+
 .power.is-on:hover {
   border-color: hsl(154, 95%, 45%);
   color: hsl(154, 95%, 45%);
+}
+
+.power.is-on:hover .power-icon svg {
+  fill: hsl(154, 95%, 45%);
 }
 
 .power.is-off {
@@ -24,7 +37,15 @@
   color: hsl(10, 85%, 40%);
 }
 
+.power.is-off .power-icon svg {
+  fill: hsl(10, 85%, 40%);
+}
+
 .power.is-off:hover {
   border-color: hsl(10, 85%, 55%);
   color: hsl(10, 85%, 55%);
+}
+
+.power.is-off:hover .power-icon svg {
+  fill: hsl(10, 85%, 55%);
 }
