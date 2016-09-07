@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node_modules/.bin/nf start",
     "dev": "NODE_ENV=development nf start",
+    "physical": "node physical/main",
     "broker": "radiodan-broker",
     "audio": "radiodan-server ../../config/radiodan-config.json",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -16,14 +17,17 @@
   "dependencies": {
     "baobab": "^2.3.3",
     "bibimbap": "^0.1.4",
+    "board-io": "^3.0.5",
     "express": "~4.10.7",
     "faye-websocket": "^0.11.0",
     "foreman": "~1.2.0",
     "isomorphic-fetch": "^2.2.1",
+    "johnny-five": "^0.10.0",
     "lodash": "^4.8.2",
     "radiodan": "radiodan/radiodan.js",
     "radiodan-broker": "^1.4.0",
-    "radiodan-client": "^1.0.0"
+    "radiodan-client": "^1.0.0",
+    "raspi-board": "^3.1.0"
   },
   "devDependencies": {
     "ReconnectingWebSocket": "github:joewalnes/reconnecting-websocket",
