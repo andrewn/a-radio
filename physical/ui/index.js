@@ -20,37 +20,29 @@ module.exports.create = function () {
     io: io
   });
 
-  var instances = {
-    Button: {}
-  };
+  var types = ['Button'/*, 'LED.RGB'*/];
+
+  var instances = {};
+  types.forEach(function (type) {
+    instances[type] = {};
+  });
+
+  var factories = {
+    'Button': createButtonInstance
+  }
 
   board.on('ready', function() {
     console.log('Board is ready');
 
-    // instances.button = new five.Button({ pin: 7, invert: false, pulldown: true });
-    //
-    // instances.button.on('press', () => console.log('pressed!'));
-
-    uiConfig.Button.map(function (btn) {
-      const id = btn.id;
-      const config = btn.config;
-
-      const button = new five.Button(Object.assign({ id: id }, config));
-
-      button.on("hold", function() {
-         console.log( id + ": Button held" );
-       });
-
-       button.on("press", function() {
-         console.log( id + ": Button pressed" );
-       });
-
-       button.on("release", function() {
-         console.log( id + ": Button released" );
-       });
-
-      instances.Button[id] = button;
-    });
+    types.forEach(function (type) {
+      var specs = uiConfig[type];
+      var factory = factories[type];
+      if (specs && factory) {
+        specs.forEach(function (spec) {
+          instances[type] = factory(spec);
+        });
+      }
+    })
 
     this.repl.inject(Object.assign(
       { io: io, five: five },
@@ -58,3 +50,23 @@ module.exports.create = function () {
     ));
   });
 }
+
+function createButtonInstance(spec) {
+  const id = spec.id;
+  const config = spec.config;
+  const button = new five.Button(Object.assign({ id: id }, config));
+
+  button.on("hold", function() {
+    console.log( id + ": Button held" );
+  });
+
+  button.on("press", function() {
+    console.log( id + ": Button pressed" );
+  });
+
+  button.on("release", function() {
+    console.log( id + ": Button released" );
+  });
+
+  return button;
+};
