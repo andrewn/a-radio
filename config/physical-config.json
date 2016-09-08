@@ -1,0 +1,30 @@
+{
+  "Button": [
+    {
+      "id": "next",
+      "config": {
+        "pin": 2,
+        "isPullup": true,
+        "invert": true
+      }
+    },
+    {
+      "id": "magic",
+      "config": {
+        "pin": 7,
+        "isPullup": false,
+        "isPulldown": true,
+        "invert": false
+      }
+    },
+    {
+      "id": "power",
+      "config": {
+        "pin": 3,
+        "isPullup": false,
+        "isPulldown": true,
+        "invert": false
+      }
+    }
+  ]
+}

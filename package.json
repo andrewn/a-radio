@@ -22,12 +22,11 @@
     "faye-websocket": "^0.11.0",
     "foreman": "~1.2.0",
     "isomorphic-fetch": "^2.2.1",
-    "johnny-five": "^0.10.0",
+    "johnny-five": "andrewn/johnny-five#button-pulldown-support",
     "lodash": "^4.8.2",
     "radiodan": "radiodan/radiodan.js",
     "radiodan-broker": "^1.4.0",
-    "radiodan-client": "^1.0.0",
-    "raspi-board": "^3.1.0"
+    "radiodan-client": "^1.0.0"
   },
   "devDependencies": {
     "ReconnectingWebSocket": "github:joewalnes/reconnecting-websocket",
@@ -44,5 +43,8 @@
     "webpack": "^2.1.0-beta.21",
     "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.10.0"
+  },
+  "optionalDependencies": {
+    "raspi-io": "andrewn/raspi-io#support-pull-down"
   }
 }
