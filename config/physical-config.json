@@ -26,5 +26,29 @@
         "invert": false
       }
     }
+  ],
+  "Led.RGB": [
+    {
+      "id": "magic",
+      "config": {
+        "pins": {
+          "red": 12,
+          "green": 13,
+          "blue": 14
+        },
+        "isAnode": true
+      }
+    },
+    {
+      "id": "power",
+      "config": {
+        "pins": {
+          "red": 6,
+          "green": 10,
+          "blue": 11
+        },
+        "isAnode": true
+      }
+    }
   ]
 }

@@ -45,6 +45,6 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "optionalDependencies": {
-    "raspi-io": "andrewn/raspi-io#support-pull-down"
+    "raspi-io": "andrewn/raspi-io#pull-down-soft-pwm"
   }
 }

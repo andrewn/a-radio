@@ -20,7 +20,7 @@ module.exports.create = function () {
     io: io
   });
 
-  var types = ['Button'/*, 'LED.RGB'*/];
+  var types = ['Button', 'Led.RGB'];
 
   var instances = {};
   types.forEach(function (type) {
@@ -28,8 +28,9 @@ module.exports.create = function () {
   });
 
   var factories = {
-    'Button': createButtonInstance
-  }
+    'Button': createButtonInstance,
+    'Led.RGB': createLedRGBInstance,
+  };
 
   board.on('ready', function() {
     console.log('Board is ready');
@@ -72,3 +73,12 @@ function createButtonInstance(spec) {
 
   return button;
 };
+
+function createLedRGBInstance(spec) {
+  const id = spec.id;
+  const config = spec.config;
+
+  const rgb = five.Led.RGB(Object.assign({ id: id }, config));
+
+  return rgb;
+}
