@@ -39,8 +39,10 @@ module.exports.create = function () {
       var factory = factories[type];
       if (specs && factory) {
         specs.forEach(function (spec) {
-          instances[type] = factory(spec);
+          instances[type][spec.id] = factory(spec);
         });
+      } else {
+        console.error("No config or factory for component type: ", type);
       }
     })
 
