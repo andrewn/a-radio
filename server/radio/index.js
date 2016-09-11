@@ -25,7 +25,7 @@ module.exports.create = function() {
 
   var player = createPlayer(handleStateChange.bind(null, this.state));
 
-  physicalUi(handleMessage.bind(null, player, state));
+  physicalUi(this.state, handleMessage.bind(null, player, state));
 
   // Serve the web app
   var webPort = this.state.get('config', 'webPort');
