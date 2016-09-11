@@ -2,7 +2,8 @@
   Experimental encoder.js from:
     https://github.com/rwaldron/johnny-five/blob/6b53a6ce8c704b61edb9a19f70a55a5c9197df8a/lib/encoder.js
 */
-var Board = require("./board");
+// var Board = require("./board");
+var Board = require("johnny-five/lib/board");
 var Emitter = require("events").EventEmitter;
 var util = require("util");
 var priv = new Map();

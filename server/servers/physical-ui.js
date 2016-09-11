@@ -3,6 +3,7 @@ var createRadiodan = require('radiodan-client').create;
 module.exports = function(state, onMessage) {
   var radiodan = createRadiodan();
 
+  // Buttons
   var powerButton = radiodan.button.get('power');
   powerButton.on('press', function () {
   });
@@ -12,6 +13,13 @@ module.exports = function(state, onMessage) {
     });
   });
 
+  // Dials
+  var powerDial = radiodan.rotaryEncoder.get('power');
+  powerDial.on('turn', function (evt) {
+    console.log('Power turn ', evt);
+  });
+
+  // LEDs
   var powerLed = radiodan.RGBLED.get('power');
 
   var powerCursor = state.select('power')

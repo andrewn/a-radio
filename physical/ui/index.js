@@ -1,5 +1,6 @@
 var five = require('johnny-five');
 var EchoIO = require('./echo-io');
+var Encoder = require('../lib/encoder');
 var MessagingClient = require('radiodan-client').MessagingClient;
 
 var IO = null;
@@ -24,7 +25,7 @@ module.exports.create = function () {
     repl: false
   });
 
-  var types = ['Button', 'Led.RGB'];
+  var types = ['Button', 'Led.RGB', 'Encoder'];
 
   var instances = {};
   types.forEach(function (type) {
@@ -34,6 +35,7 @@ module.exports.create = function () {
   var factories = {
     'Button': createButtonInstance,
     'Led.RGB': createLedRGBInstance,
+    'Encoder': createEncoderInstance
   };
 
   board.on('ready', function() {
@@ -134,4 +136,17 @@ function createLedRGBInstance(spec, publisher, msgClient) {
   });
 
   return rgb;
+}
+
+function createEncoderInstance(spec, publisher) {
+  const id = spec.id;
+  const config = spec.config;
+  const topicKey = 'event.rotary-encoder.' + id + '.turn';
+
+  const encoder = Encoder(Object.assign({ id: id }, config));
+
+  // the encoder will try to work out where in the loop you are
+  encoder.on('change', function (evt) {
+    publisher.publish(topicKey, evt);
+  });
 }

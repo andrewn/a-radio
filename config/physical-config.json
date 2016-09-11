@@ -27,6 +27,15 @@
       }
     }
   ],
+  "Encoder": [
+    {
+      "id": "power",
+      "config": {
+        "pins": [5, 4],
+        "positions": 96
+      }
+    }
+  ],
   "Led.RGB": [
     {
       "id": "magic",
