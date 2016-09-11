@@ -13,57 +13,66 @@ var buildDir = resolve(__dirname, 'dist');
 // var dir_html = resolve(__dirname, 'html');
 // var dir_build = ;
 
-module.exports = {
-  entry: [
-    isDevelopment ? 'webpack-hot-middleware/client' : null,
+module.exports = function (options) {
+  const entries = [
     entryFile
-  ],
-  output: {
-    path: buildDir,
-    filename: 'bundle.js'
-  },
-  devServer: {
-    contentBase: buildDir,
-  },
-  module: {
-    loaders: [
-      {
-        loader: 'babel',
-        test: /\.jsx?$/,
-        exclude: /(node_modules)/,
-      },
-      {
-        loader: 'style!css!postcss',
-        test: /\.css$/
-      },
-      {
-        loader: 'raw',
-        test: /\.svg$/
-      }
-    ]
-  },
-  resolve: {
-    alias: {
-      'react': 'preact-compat',
-      'react-dom': 'preact-compat'
-    }
-  },
-  plugins: [
-    isDevelopment ? new webpack.HotModuleReplacementPlugin() : null,
-  // // Simply copies the files over
-  // new CopyWebpackPlugin([
-  //     { from: dir_html } // to: output.path
-  // ]),
-  // // Avoid publishing files when compilation fails
-  // new webpack.NoErrorsPlugin()
-  ],
-  stats: {
-    // Nice colored output
-    colors: true
-  },
-  postcss: function() {
-    return [autoprefixer];
+  ];
+
+  if (isDevelopment) {
+    entries.push('webpack-hot-middleware/client');
   }
-// Create source maps for the bundle
-// devtool: 'source-map',
-};
+
+  return {
+    entry: entries,
+    output: {
+      path: buildDir,
+      filename: 'bundle.js'
+    },
+    devServer: {
+      contentBase: buildDir,
+    },
+    module: {
+      loaders: [
+        {
+          loader: 'babel',
+          test: /\.jsx?$/,
+          exclude: [ resolve('node_modules/proptypes') ]
+        },
+        {
+          loader: 'style!css!postcss',
+          test: /\.css$/
+        },
+        {
+          loader: 'raw',
+          test: /\.svg$/
+        }
+      ]
+    },
+    resolve: {
+      alias: {
+        'react': 'preact-compat',
+        'react-dom': 'preact-compat'
+      }
+    },
+    plugins:
+      isDevelopment ?
+      [
+        new webpack.HotModuleReplacementPlugin()
+      ] : null,
+    // // Simply copies the files over
+    // new CopyWebpackPlugin([
+    //     { from: dir_html } // to: output.path
+    // ]),
+    // // Avoid publishing files when compilation fails
+    // new webpack.NoErrorsPlugin()
+    stats: {
+      // Nice colored output
+      colors: true
+    },
+    postcss: function() {
+      return [autoprefixer];
+    }
+  // Create source maps for the bundle
+  // devtool: 'source-map',
+  };
+}

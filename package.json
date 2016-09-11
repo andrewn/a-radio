@@ -10,7 +10,7 @@
     "broker": "radiodan-broker",
     "audio": "radiodan-server ../../config/radiodan-config.json",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack && cp static/index.html dist/"
   },
   "author": "Andrew Nicolaou <me@andrewnicolaou.co.uk>",
   "license": "Apache-2",
@@ -36,11 +36,11 @@
     "css-loader": "^0.23.1",
     "postcss": "^5.0.19",
     "postcss-loader": "^0.8.2",
-    "preact": "^6.0.1",
-    "preact-compat": "^3.0.0",
+    "preact": "^6.0.2",
+    "preact-compat": "^3.0.1",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.13.1",
-    "webpack": "^2.1.0-beta.21",
+    "webpack": "^2.1.0-beta.4",
     "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.10.0"
   },
