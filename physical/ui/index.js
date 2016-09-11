@@ -44,7 +44,7 @@ module.exports.create = function () {
       var factory = factories[type];
       if (specs && factory) {
         specs.forEach(function (spec) {
-          instances[type][spec.id] = factory(spec, publisher);
+          instances[type][spec.id] = factory(spec, publisher, msgClient);
         });
       } else {
         console.error("No config or factory for component type: ", type);
@@ -84,11 +84,54 @@ function createButtonInstance(spec, publisher) {
   return button;
 };
 
-function createLedRGBInstance(spec, publisher) {
+function createLedRGBInstance(spec, publisher, msgClient) {
   const id = spec.id;
   const config = spec.config;
+  const topicKey = 'command.rgb-led.' + id;
+  const workerId = 'radiodan-physical-ui-rgbled-' + id;
+
+  const worker = msgClient.Worker.create(workerId);
 
   const rgb = five.Led.RGB(Object.assign({ id: id }, config));
+
+  worker.addService({
+    serviceType: 'rgb-led',
+    serviceInstances: [id]
+  });
+
+  worker.ready();
+
+  worker.events.on('request', function (req) {
+    var stateChangePromise;
+
+    console.log('RGBLED request', req);
+
+    switch(req.command) {
+      // case 'change':
+      //   req.params.queue = req.params.queue || [];
+      //
+      //   stateChangePromise = promise.all(
+      //     req.params.queue.map(function (params, index) {
+      //       params.chain = index > 0;
+      //       return changeRgbState(rgb, params);
+      //     })
+      //   );
+      //   break;
+      case 'status':
+        stateChangePromise = Promise.resolve({ color: rgb.color() });
+        break;
+      default:
+        rgb.color(req.params.color);
+        stateChangePromise = Promise.resolve();
+    }
+
+    stateChangePromise.then(
+      function () {
+        worker.respond(req.sender, req.correlationId, {error: false});
+      }
+    );
+
+  });
 
   return rgb;
 }

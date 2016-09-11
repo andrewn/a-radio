@@ -12,6 +12,9 @@ module.exports = function(onMessage) {
     });
   });
 
+  var powerLed = radiodan.RGBLED.get('power');
+  powerLed.emit({ color: 'red' });
+
   return {
     onState: (state) => console.log('State has changed')
   }
