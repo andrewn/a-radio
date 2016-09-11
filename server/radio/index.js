@@ -5,6 +5,7 @@ var fetchServicesAndSetState = require('./services').fetchAndSetState;
 var config = require('../lib/config');
 var assetServer = require('../servers/asset-server');
 var apiServer = require('../servers/api-server');
+var physicalUi = require('../servers/physical-ui');
 var createPlayer = require('./player').create;
 
 var initialState = {
@@ -23,6 +24,8 @@ module.exports.create = function() {
   }));
 
   var player = createPlayer(handleStateChange.bind(null, this.state));
+
+  physicalUi(handleMessage.bind(null, player, state));
 
   // Serve the web app
   var webPort = this.state.get('config', 'webPort');

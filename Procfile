@@ -1,4 +1,4 @@
 broker: npm run broker
 audio: npm run audio
-physical: npm run physical
+physical: sudo npm run physical
 app: node server/main.js

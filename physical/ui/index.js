@@ -1,5 +1,6 @@
 var five = require('johnny-five');
 var EchoIO = require('./echo-io');
+var MessagingClient = require('radiodan-client').MessagingClient;
 
 var IO = null;
 
@@ -15,9 +16,12 @@ var uiConfig = require('../../config/physical-config.json');
 
 module.exports.create = function () {
   const io = new IO();
+  const msgClient = MessagingClient.create();
+  const publisher = msgClient.Publisher.create();
 
   var board = new five.Board({
-    io: io
+    io: io,
+    repl: false
   });
 
   var types = ['Button', 'Led.RGB'];
@@ -40,41 +44,47 @@ module.exports.create = function () {
       var factory = factories[type];
       if (specs && factory) {
         specs.forEach(function (spec) {
-          instances[type][spec.id] = factory(spec);
+          instances[type][spec.id] = factory(spec, publisher);
         });
       } else {
         console.error("No config or factory for component type: ", type);
       }
     })
 
-    this.repl.inject(Object.assign(
-      { io: io, five: five },
-      instances
-    ));
+    if (this.repl) {
+      this.repl.inject(Object.assign(
+        { io: io, five: five },
+        instances
+      ));
+    }
   });
 }
 
-function createButtonInstance(spec) {
+function createButtonInstance(spec, publisher) {
   const id = spec.id;
   const config = spec.config;
+  const topicKey = 'event.button.' + id;
   const button = new five.Button(Object.assign({ id: id }, config));
-
-  button.on("hold", function() {
-    console.log( id + ": Button held" );
-  });
 
   button.on("press", function() {
     console.log( id + ": Button pressed" );
+    publisher.publish(topicKey + '.press', { pressed: true });
+  });
+
+  button.on("hold", function() {
+    console.log( id + ": Button held" );
+    publisher.publish(topicKey + '.hold', { pressed: true, durationMs: button.holdtime });
   });
 
   button.on("release", function() {
     console.log( id + ": Button released" );
+    publisher.publish(topicKey + '.release', { pressed: false });
   });
 
   return button;
 };
 
-function createLedRGBInstance(spec) {
+function createLedRGBInstance(spec, publisher) {
   const id = spec.id;
   const config = spec.config;
 
