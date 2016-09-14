@@ -1,7 +1,6 @@
 var five = require('johnny-five');
+var RotaryEncoder = require('raspi-rotary-encoder').RotaryEncoder;
 var EchoIO = require('./echo-io');
-// var Encoder = require('../lib/encoder');
-var Encoder = require('../lib/rotary-encoder');
 var MessagingClient = require('radiodan-client').MessagingClient;
 
 var IO = null;
@@ -144,16 +143,10 @@ function createEncoderInstance(spec, publisher) {
   const config = spec.config;
   const topicKey = 'event.rotary-encoder.' + id + '.turn';
 
-  const encoder = new Encoder(Object.assign({ id: id }, config));
+  const encoder = new RotaryEncoder(Object.assign({ id: id }, config));
 
   // the encoder will try to work out where in the loop you are
   encoder.on('change', function (evt) {
-    console.log('change', evt);
-    // publisher.publish(topicKey, evt);
-  });
-
-  encoder.on("rotation", function(evt) {
-    console.log('rotation', evt)
-    // console.log("Rotations: %d", Math.abs(this.value / 80));
+    publisher.publish(topicKey, evt);
   });
 }

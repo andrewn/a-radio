@@ -26,7 +26,8 @@
     "lodash": "^4.8.2",
     "radiodan": "radiodan/radiodan.js",
     "radiodan-broker": "^1.4.0",
-    "radiodan-client": "^1.0.0"
+    "radiodan-client": "^1.0.0",
+    "raspi-rotary-encoder": "andrewn/raspi-rotary-encoder"
   },
   "devDependencies": {
     "ReconnectingWebSocket": "github:joewalnes/reconnecting-websocket",

@@ -31,8 +31,27 @@
     {
       "id": "power",
       "config": {
-        "a": 5,
-        "b": 4
+        "pins": {
+          "a": 5,
+          "b": 4
+        },
+        "pullResistors": {
+          "a": "up",
+          "b": "up"
+        }
+      }
+    },
+    {
+      "id": "magic",
+      "config": {
+        "pins": {
+          "a": 8,
+          "b": 9
+        },
+        "pullResistors": {
+          "a": "up",
+          "b": "up"
+        }
       }
     }
   ],
