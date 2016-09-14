@@ -19,10 +19,8 @@ module.exports.create = function(onStateChange) {
         })
         .then(player.play);
     },
-    volume: function(value) {
-      return player.volume({
-        value: value
-      });
+    volume: function(params) {
+      return player.volume(params);
     },
     stop: function() {
       return player.stop();

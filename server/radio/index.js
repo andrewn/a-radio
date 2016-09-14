@@ -53,7 +53,11 @@ function handleMessage(player, state, msg) {
     case 'serviceSelect':
       return serviceSelect(player, state, msg.data);
     case 'volume':
-      return volume(player, state, msg.data);
+      return volume(player, state, { value: msg.data });
+    case 'volumeUp':
+      return volume(player, state, { diff: 5 });
+    case 'volumeDown':
+      return volume(player, state, { diff: -5 });
     case 'power':
       return power(player, state, msg.data);
     default:

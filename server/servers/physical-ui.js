@@ -14,9 +14,24 @@ module.exports = function(state, onMessage) {
   });
 
   // Dials
+  var lastValue = 0;
   var powerDial = radiodan.rotaryEncoder.get('power');
   powerDial.on('turn', function (evt) {
-    console.log('Power turn ', evt);
+    // console.log('turn', evt.value);
+    if ((evt.value % 10) === 0) {
+      if (evt.value > lastValue) {
+        console.log('Triggering volume increment +');
+        onMessage({
+          type: 'volumeUp'
+        });
+      } else {
+        console.log('Triggering volume decrement -');
+        onMessage({
+          type: 'volumeDown'
+        });
+      }
+      lastValue = evt.value;
+    }
   });
 
   // LEDs
