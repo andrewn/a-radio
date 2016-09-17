@@ -12,7 +12,6 @@ export default function({ min=0, max=100, step=5, value=0, onChange }) {
       { times(
         numItems,
         index => {
-          console.log('step value', index * step)
           const stepValue = index * step;
           const eventObject = { target: { value: stepValue.toString() } };
           return <li

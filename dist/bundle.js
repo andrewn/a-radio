@@ -5065,7 +5065,6 @@ var Step = function Step(_ref) {
     'ul',
     { className: 'stepped-range' },
     __WEBPACK_IMPORTED_MODULE_1_lodash_times___default()(numItems, function (index) {
-      console.log('step value', index * step);
       var stepValue = index * step;
       var eventObject = { target: { value: stepValue.toString() } };
       return __WEBPACK_IMPORTED_MODULE_0_react__["a" /* default */].createElement(
