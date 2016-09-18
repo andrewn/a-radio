@@ -1,3 +1,40 @@
 {
-  
+  "services": {
+    "fluxfm": {
+      "id": "fluxfm",
+      "title": "Flux FM",
+      "playlist": "http://streams.fluxfm.de/live/mp3-320/audio/play.pls",
+      "logos": {
+        "active": "http://www.fluxfm.de/wp-content/uploads/2016/04/FluxFM-1-250x250.jpg",
+        "inactive": "http://www.fluxfm.de/wp-content/uploads/2016/04/FluxFM-1-250x250.jpg",
+        "colour": {
+          "hex": "#ffe400"
+        }
+      }
+    },
+    "elektroflux": {
+      "id": "elektroflux",
+      "title": "ElektroFlux",
+      "playlist": "http://streams.fluxfm.de/elektroflux/mp3-320/audio/play.pls",
+      "logos": {
+        "active": "http://www.fluxfm.de/wp-content/uploads/2016/04/ElectroFlux-250x250.jpg",
+        "inactive": "http://www.fluxfm.de/wp-content/uploads/2016/04/ElectroFlux-250x250.jpg",
+        "colour": {
+          "hex": "#ffe400"
+        }
+      }
+    },
+    "rinfm": {
+      "id": "rinfm",
+      "title": "Radio Isla Negra",
+      "playlist": "http://66.228.60.216:2199/tunein/rinshoutcast-stream.pls",
+      "logos": {
+        "active": "http://www.radioislanegra.com/rinfm/uploads/2014/04/rinfm-jingle.png",
+        "inactive": "http://www.radioislanegra.com/rinfm/uploads/2014/04/rinfm-jingle.png",
+        "colour": {
+          "hex": "#3b8ca0"
+        }
+      }
+    }
+  }
 }
