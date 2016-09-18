@@ -7,6 +7,7 @@ var assetServer = require('../servers/asset-server');
 var apiServer = require('../servers/api-server');
 var physicalUi = require('../servers/physical-ui');
 var createPlayer = require('./player').create;
+var profile = require('../lib/local-data').profile;
 
 var initialState = {
   power: false,
@@ -20,7 +21,8 @@ var initialState = {
 module.exports.create = function() {
   // Create a new state tree with config
   this.state = new Baobab(assign({}, initialState, {
-    config: config()
+    config: config(),
+    lastService: profile.get('lastService')
   }));
 
   var player = createPlayer(handleStateChange.bind(null, this.state));
@@ -39,12 +41,15 @@ module.exports.create = function() {
 
   fetchServicesAndSetState(this.state.select('config'), this.state.select('services'))
     .then(function (servicesById) {
-      if (this.state.select('currentService').get() === null) {
+      // Set a default service on startup so that pressing
+      // power automatically plays a station
+      if (this.state.select('lastService').get() === null) {
         const initialService = Object.keys(servicesById)[0];
         console.log('🙅 No service is set so setting ', initialService);
         state.select('lastService').set(initialService);
       }
     });
+
 }
 
 function handleStateChange(state, playerState) {
@@ -81,7 +86,10 @@ function serviceSelect(player, state, id) {
   const playlist = state.select('services', id, 'playlist').get();
   player
     .stream(playlist)
-    .then(() => state.select('currentService').set(id));
+    .then(() => {
+      state.select('currentService').set(id);
+      profile.set('lastService', id);
+    });
 }
 
 function volume(player, state, value) {
