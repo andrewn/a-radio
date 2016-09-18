@@ -1,9 +1,15 @@
 const LocalStorage = require('node-localstorage').LocalStorage;
 const path = require('path');
 
-const directory = process.env.LOCAL_DATA_PATH || '../';
-const cache   = new LocalStorage('cache');
-const profile = new LocalStorage('profile');
+const directory = process.env.LOCAL_DATA_PATH || path.join(__dirname, '..', '..', 'user-data');
+const cachePath = path.join(directory, 'cache');
+const profilePath = path.join(directory, 'profile')
+
+console.log('Storage: cachePath', cachePath);
+console.log('Storage: profilePath', profilePath);
+
+const cache   = new LocalStorage( cachePath );
+const profile = new LocalStorage( profilePath );
 
 module.exports = {
   cache: createStorageForObject(cache),
