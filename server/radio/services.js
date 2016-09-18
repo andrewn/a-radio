@@ -9,12 +9,18 @@ module.exports.fetchAndSetState = function(config, state) {
 
   var cachedServices = cache.get(CACHE_KEY);
 
-  if (cachedServices) {
-    console.log('Found cached services', Object.keys(cachedServices));
-    state.set(cachedServices);
-  }
+  return new Promise(function (resolve, reject) {
+    let promiseResolver = resolve;
 
-  fetchAndParseServices(endpoint, state);
+    if (cachedServices !== null) {
+      console.log('Found cached services', Object.keys(cachedServices));
+      state.set(cachedServices);
+      promiseResolver(cachedServices);
+      promiseResolver = null; // Subsequent caches shouldn't resolve this promise
+    }
+
+    fetchAndParseServices(endpoint, state, promiseResolver);
+  });
 }
 
 function fetchAndParseServices(endpoint, state) {
@@ -27,6 +33,9 @@ function fetchAndParseServices(endpoint, state) {
         const servicesById  = services.reduce(indexById, {});
         state.set(servicesById);
         cache.set(CACHE_KEY, servicesById);
+        if (promiseResolver !== null) {
+          promiseResolver(servicesById);
+        }
       },
       // Failure
       function(err) {
