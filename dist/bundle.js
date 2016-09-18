@@ -4843,6 +4843,7 @@ var handleMessage = function handleMessage(msg) {
 };
 
 var connection = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__lib_connection__["a" /* connect */])(handleMessage);
+window.connection = connection; // Useful for debugging
 
 var handleDispatch = function handleDispatch(type, data) {
   console.log('DISPATCH', type, data);

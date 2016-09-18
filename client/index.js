@@ -18,6 +18,7 @@ const handleMessage = msg => {
 }
 
 const connection = connect(handleMessage);
+window.connection = connection; // Useful for debugging
 
 const handleDispatch = (type, data) => {
   console.log('DISPATCH', type, data);
