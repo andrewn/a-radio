@@ -37,7 +37,14 @@ module.exports.create = function() {
 
   player.status(); // triggers state change with current status
 
-  fetchServicesAndSetState(this.state.select('config'), this.state.select('services'));
+  fetchServicesAndSetState(this.state.select('config'), this.state.select('services'))
+    .then(function (servicesById) {
+      if (this.state.select('currentService').get() === null) {
+        const initialService = Object.keys(servicesById)[0];
+        console.log('🙅 No service is set so setting ', initialService);
+        state.select('lastService').set(initialService);
+      }
+    });
 }
 
 function handleStateChange(state, playerState) {
@@ -68,7 +75,8 @@ function handleMessage(player, state, msg) {
 function serviceSelect(player, state, id) {
   const powerValue = state.select('power').get();
   if (powerValue === false) {
-    power(player, state);
+    // Can only change service when on
+    return;
   }
   const playlist = state.select('services', id, 'playlist').get();
   player
