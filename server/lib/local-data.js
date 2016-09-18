@@ -24,9 +24,11 @@ function createSetterForStorageObject(storage) {
 function createGetterForStorageObject(storage) {
   return function (key) {
     try {
-      return JSON.stringify( storage.getItem(key) );
+      const data = storage.getItem(key);
+      return (data === '' || data === null) ? null : JSON.parse( data );
     } catch (err) {
-      throw new Error('error setting key ', key);
+      console.error('error getting key ', key)
+      throw err;
     }
   }
 }
