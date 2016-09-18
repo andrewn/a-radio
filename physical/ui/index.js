@@ -1,9 +1,9 @@
 var five = require('johnny-five');
-var RotaryEncoder = require('raspi-rotary-encoder').RotaryEncoder;
 var EchoIO = require('./echo-io');
 var MessagingClient = require('radiodan-client').MessagingClient;
 
 var IO = null;
+var RotaryEncoder;
 
 try {
   IO = require('raspi-io');
@@ -12,6 +12,19 @@ try {
   console.error(err);
   IO = EchoIO;
 }
+
+try {
+  RotaryEncoder = require('raspi-rotary-encoder').RotaryEncoder
+} catch(err) {
+  console.error('raspi-rotary-encoder not found, falling back to mock');
+  console.error(err);
+  RotaryEncoder = function () {
+    return {
+      on: function () {}
+    }
+  };
+}
+
 
 var uiConfig = require('../../config/physical-config.json');
 
