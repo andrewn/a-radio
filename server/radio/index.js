@@ -52,6 +52,10 @@ module.exports.create = function() {
 
 }
 
+function isRadioOff(state) {
+  return state.select('power').get() === false;
+}
+
 function handleStateChange(state, playerState) {
   var volume = parseInt(playerState.volume, 10);
   if (volume != null) {
@@ -64,6 +68,8 @@ function handleMessage(player, state, msg) {
   switch (msg.type) {
     case 'serviceSelect':
       return serviceSelect(player, state, msg.data);
+    case 'nextService':
+      return nextService(player, state);
     case 'volume':
       return volume(player, state, { value: msg.data });
     case 'volumeUp':
@@ -78,11 +84,8 @@ function handleMessage(player, state, msg) {
 }
 
 function serviceSelect(player, state, id) {
-  const powerValue = state.select('power').get();
-  if (powerValue === false) {
-    // Can only change service when on
-    return;
-  }
+  if (isRadioOff(state) === true) { return; }
+
   const playlist = state.select('services', id, 'playlist').get();
   player
     .stream(playlist)
@@ -92,16 +95,35 @@ function serviceSelect(player, state, id) {
     });
 }
 
+function nextService(player, state) {
+  if (isRadioOff(state) === true) { return; }
+
+  const currentServiceId = state.select('currentService').get();
+  const services = state.select('services').get();
+  const servicesKeys = Object.keys(services);
+  const indexOfService = servicesKeys.indexOf(currentServiceId);
+
+  if (indexOfService > -1) {
+    const nextServiceIndex = (indexOfService + 1) % servicesKeys.length;
+    const nextServiceId = servicesKeys[nextServiceIndex];
+    console.log('➡️ Next service: ', nextServiceIndex, nextServiceId);
+    serviceSelect(player, state, nextServiceId);
+  } else {
+    console.error('Cannot find service ', currentServiceId, ' in list of all services');
+  }
+}
+
 function volume(player, state, value) {
   return player.volume(value);
 }
 
 function power(player, state) {
+  const isOn = !isRadioOff(state);
   const powerCursor = state.select('power');
   const lastServiceCursor = state.select('lastService');
   const currentServiceCursor = state.select('currentService');
 
-  if (powerCursor.get() === true) {
+  if (isOn == true) {
     player.stop();
     powerCursor.set(false);
     // remember last service

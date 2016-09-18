@@ -5,11 +5,16 @@ module.exports = function(state, onMessage) {
 
   // Buttons
   var powerButton = radiodan.button.get('power');
-  powerButton.on('press', function () {
-  });
   powerButton.on('release', function () {
     onMessage({
       type: 'power'
+    });
+  });
+
+  var nextButton = radiodan.button.get('next');
+  nextButton.on('release', function () {
+    onMessage({
+      type: 'nextService'
     });
   });
 
