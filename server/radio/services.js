@@ -1,3 +1,5 @@
+'use strict';
+
 var fetch = require('isomorphic-fetch');
 var cache = require('../lib/local-data').cache;
 
@@ -10,7 +12,7 @@ module.exports.fetchAndSetState = function(config, state) {
   var cachedServices = cache.get(CACHE_KEY);
 
   return new Promise(function (resolve, reject) {
-    let promiseResolver = resolve;
+    var promiseResolver = resolve;
 
     if (cachedServices !== null) {
       console.log('Found cached services', Object.keys(cachedServices));
