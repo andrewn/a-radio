@@ -8,6 +8,12 @@ const TIMEOUT_MS = 5 * 1000;
 
 module.exports.fetchAndSetState = function(config, state) {
   var endpoint = config.get('bbcServicesApi');
+  var nonApiServices = config.get('services') || null;
+
+  if (nonApiServices !== null) {
+    console.log('Adding non-api services from config', Object.keys(nonApiServices));
+    state.merge(nonApiServices);
+  }
 
   var cachedServices = cache.get(CACHE_KEY);
 
@@ -16,7 +22,7 @@ module.exports.fetchAndSetState = function(config, state) {
 
     if (cachedServices !== null) {
       console.log('Found cached services', Object.keys(cachedServices));
-      state.set(cachedServices);
+      state.merge(cachedServices);
       promiseResolver(cachedServices);
       promiseResolver = null; // Subsequent caches shouldn't resolve this promise
     }
@@ -33,7 +39,7 @@ function fetchAndParseServices(endpoint, state) {
       function(services) {
         console.log('... done, found services', services.length);
         const servicesById  = services.reduce(indexById, {});
-        state.set(servicesById);
+        state.merge(servicesById);
         cache.set(CACHE_KEY, servicesById);
         if (promiseResolver !== null) {
           promiseResolver(servicesById);

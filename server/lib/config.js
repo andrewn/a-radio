@@ -1,11 +1,12 @@
 var forEach = require('lodash/forEach');
 
-var config = require('../../config/radio.json');
+var configFile = require('../../config/radio.json');
 
 module.exports = function() {
   var config = {
     bbcServicesApi: get('BBC_SERVICES_API'),
-    webPort: get('WEB_PORT')
+    webPort: get('WEB_PORT'),
+    services: configFile.services || {},
   };
 
   validate(config);
@@ -14,7 +15,7 @@ module.exports = function() {
 }
 
 function get(key) {
-  var fromConfig = config[key];
+  var fromConfig = configFile[key];
   return fromConfig != null ? fromConfig : process.env[key];
 }
 
