@@ -21,8 +21,17 @@ function createWebpackConfig(options) {
     entryFile
   ];
 
+  const plugins = [
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: [autoprefixer]
+      }
+    })
+  ];
+
   if (isDevelopment) {
     entries.push('webpack-hot-middleware/client');
+    plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
   return {
@@ -57,11 +66,7 @@ function createWebpackConfig(options) {
         'react-dom': 'preact-compat'
       }
     },
-    plugins:
-      isDevelopment ?
-      [
-        new webpack.HotModuleReplacementPlugin()
-      ] : null,
+    plugins: plugins,
     // // Simply copies the files over
     // new CopyWebpackPlugin([
     //     { from: dir_html } // to: output.path
@@ -71,9 +76,6 @@ function createWebpackConfig(options) {
     stats: {
       // Nice colored output
       colors: true
-    },
-    postcss: function() {
-      return [autoprefixer];
     }
   // Create source maps for the bundle
   // devtool: 'source-map',

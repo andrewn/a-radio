@@ -7,7 +7,7 @@ var isDevelopment = process.env.NODE_ENV === 'development';
 
 module.exports = function() {
   var app = express();
-  var path = join(__dirname, '..', '..', isDevelopment ? 'static' : 'dist');
+  var path = join(__dirname, '..', '..', isDevelopment === true ? 'static' : 'dist');
   app.use(express.static(path));
 
   // Load dev middleware in development, otherwise do nothing

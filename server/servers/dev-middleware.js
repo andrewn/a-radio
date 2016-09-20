@@ -5,6 +5,7 @@ var webpackDevMiddleware,
 
 module.exports = function(app) {
   if (process.env.NODE_ENV !== 'development') {
+    console.error('Not development');
     return null;
   }
 
