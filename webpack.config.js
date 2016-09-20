@@ -13,7 +13,10 @@ var buildDir = resolve(__dirname, 'dist');
 // var dir_html = resolve(__dirname, 'html');
 // var dir_build = ;
 
-module.exports = function (options) {
+
+module.exports = createWebpackConfig();
+
+function createWebpackConfig(options) {
   const entries = [
     entryFile
   ];
