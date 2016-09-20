@@ -35,6 +35,18 @@
           "hex": "#3b8ca0"
         }
       }
+    },
+    "nts1": {
+      "id": "nts1",
+      "title": "NTS Radio",
+      "playlist": "http://listen.ntslive.co.uk/stream",
+      "logos": {
+        "active": "http://cdn-radiotime-logos.tunein.com/s150238q.png",
+        "inactive": "http://cdn-radiotime-logos.tunein.com/s150238q.png",
+        "colour": {
+          "hex": "#000"
+        }
+      }
     }
   }
 }
