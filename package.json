@@ -25,9 +25,11 @@
     "johnny-five": "andrewn/johnny-five#button-pulldown-support",
     "lodash": "^4.8.2",
     "node-localstorage": "^1.3.0",
+    "oauth": "^0.9.14",
     "radiodan": "radiodan/radiodan.js",
     "radiodan-broker": "^1.4.0",
-    "radiodan-client": "^1.0.0"
+    "radiodan-client": "^1.0.0",
+    "twitter": "^1.4.0"
   },
   "devDependencies": {
     "ReconnectingWebSocket": "github:joewalnes/reconnecting-websocket",

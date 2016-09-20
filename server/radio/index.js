@@ -8,6 +8,7 @@ var apiServer = require('../servers/api-server');
 var physicalUi = require('../servers/physical-ui');
 var createPlayer = require('./player').create;
 var profile = require('../lib/local-data').profile;
+var magicTweet = require('./magic/tweet');
 
 var initialState = {
   power: false,
@@ -15,7 +16,13 @@ var initialState = {
   lastService: null,
   services: {},
   volume: 0,
-  config: {}
+  config: {},
+  magic: {
+    tweet: {
+      oAuthToken: null,
+      token: null
+    }
+  }
 };
 
 module.exports.create = function() {
@@ -78,6 +85,12 @@ function handleMessage(player, state, msg) {
       return volume(player, state, { diff: -5 });
     case 'power':
       return power(player, state, msg.data);
+    case 'tweet.connect-requested':
+      return magicTweet.connect(state.select('magic', 'tweet'), player, msg.data);
+    case 'tweet.oauth-verify':
+      return magicTweet.verify(state.select('magic', 'tweet'), player, msg.data);
+    case 'tweet.tweet':
+      return magicTweet.trigger(state.select('magic', 'tweet'), player, msg.data);
     default:
       return console.warn('No handler for message type: ', msg.type, msg);
   }

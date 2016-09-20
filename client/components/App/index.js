@@ -20,6 +20,9 @@ export default function ({state, dispatch}) {
       currentService={state.currentService}
       onServiceSelect={ id => dispatch('serviceSelect', id) }/>
     <h2>Magic buttons</h2>
-    <Tweet />
+    <Tweet
+      state={state.magic.tweet}
+      onConnectRequested={ () => dispatch('tweet.connect-requested', window.location.origin) }
+      onTweetRequested={ () => dispatch('tweet.tweet') } />
   </div>;
 }
