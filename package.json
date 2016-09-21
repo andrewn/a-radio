@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "node_modules/.bin/nf start",
-    "dev": "NODE_ENV=development nf start",
+    "dev": "NODE_ENV=development nf start --procfile Procfile.development",
     "physical": "node physical/main",
     "broker": "radiodan-broker",
     "audio": "radiodan-server ../../config/radiodan-config.json",
