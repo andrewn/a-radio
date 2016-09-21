@@ -29,12 +29,13 @@ const twitterOAuthVerify = window.location.search.match(/oauth_verifier=(([\w]|.
 
 if (twitterOAuthVerify && twitterOAuthVerify[1]) {
   setTimeout(
-    () => handleDispatch('tweet.oauth-verify', twitterOAuthVerify[1]),
+    () => {
+      handleDispatch('tweet.oauth-verify', twitterOAuthVerify[1]);
+
+      // Get rid of oAuth credentials in address bar
+      history.replaceState({}, '', window.location.origin);
+    },
     2000
-  );
-  setTimeout(
-    () => window.location = window.location.origin,
-    3000
   );
 }
 
