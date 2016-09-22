@@ -14,8 +14,18 @@ function createOAuth(callback) {
   );
 }
 
-// oauth_verifier=wEhaeETuieMtQPDBRIS3tAjLT7d8h1PO
-// oauth_token=-hWZogAAAAAAxEALAAABV0lPBAo
+function messageForMood(mood, serviceId) {
+  switch(mood) {
+    case 'positive':
+      return "My ower's loving this on #" + serviceId  + " @radiotagbot";
+    case 'neutral':
+      return "My owner's currently listening to #" + serviceId  + " @radiotagbot";
+    case 'positive':
+      return "Not my owner's kind of thing #" + serviceId  + " @radiotagbot";
+    default:
+      return null;
+  }
+}
 
 module.exports = {
   init: function (state, player) {
@@ -79,11 +89,20 @@ module.exports = {
       }
     );
   },
-  trigger: function (state) {
-    console.log('TRIGGER');
-
+  trigger: function (state, player, data) {
     const credentials = profile.get('twitter');
-    console.log('...credentials', credentials);
+
+    if (!credentials.oAuthAccessToken || !credentials.oAuthAccessTokenSecret) {
+      console.log('🐦 No Twitter oAuth crendentials');
+      return;
+    }
+
+    if (!data.serviceId) {
+      console.log('🐦 Tweet no service id given');
+      return;
+    }
+
+    console.log('🐦 ...credentials', credentials);
 
     const authCredentials = {
       consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -92,14 +111,21 @@ module.exports = {
       access_token_secret: credentials.oAuthAccessTokenSecret,
     };
 
-    console.log('AUTH', authCredentials);
+    console.log('🐦 AUTH', authCredentials);
+    console.log('🐦 Data', data);
 
     var client = new Twitter(authCredentials);
 
-    client.post('statuses/update', {status: 'I Love Twitter'},  function(error, tweet, response) {
+    var message = messageForMood(data.mood, data.serviceId);
+
+    if (message === null) {
+      return;
+    }
+
+    client.post('statuses/update', {status: message},  function(error, tweet, response) {
       if(error) throw error;
-      console.log(tweet);  // Tweet body.
-      console.log(response);  // Raw response object.
+      console.log('🐦 ', tweet);  // Tweet body.
+      //console.log('🐦 ', response);  // Raw response object.
     });
   }
 }

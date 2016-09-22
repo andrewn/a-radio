@@ -18,7 +18,9 @@ const MainUi = function ({ user, onClick }) {
   return (
     <div>
       Tweeting as { user.screenName }!
-      <button onClick={ onClick }>Tweet</button>
+      <button onClick={ () => onClick({ mood: 'positive' }) }>+</button>
+      <button onClick={ () => onClick({ mood: 'neutral' }) }>+/-</button>
+      <button onClick={ () => onClick({ mood: 'negative' }) }>-</button>
     </div>
   );
 };

@@ -95,7 +95,11 @@ function handleMessage(player, state, msg) {
     case 'tweet.oauth-verify':
       return magicTweet.verify(state.select('magic', 'tweet'), player, msg.data);
     case 'tweet.tweet':
-      return magicTweet.trigger(state.select('magic', 'tweet'), player, msg.data);
+      return magicTweet.trigger(
+        state.select('magic', 'tweet'),
+        player,
+        Object.assign({}, msg.data, { serviceId: state.get('currentService') })
+      );
     default:
       return console.warn('No handler for message type: ', msg.type, msg);
   }

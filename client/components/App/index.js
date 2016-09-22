@@ -22,6 +22,6 @@ export default function ({state, dispatch}) {
     <h2>Magic buttons</h2>
     <Tweet
       state={state.magic.tweet}
-      onTweetRequested={ () => dispatch('tweet.tweet') } />
+      onTweetRequested={ (data) => dispatch('tweet.tweet', data) } />
   </div>;
 }
