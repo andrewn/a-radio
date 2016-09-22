@@ -63,6 +63,22 @@ module.exports = function(state, onMessage) {
     }
   }
 
+  var magicLed = radiodan.RGBLED.get('magic');
+
+  powerCursor.on('update', function (evt) {
+    updateMagicLedOnPower(evt.data.currentData);
+  });
+
+  updateMagicLedOnPower(powerCursor.get());
+
+  function updateMagicLedOnPower(powerState) {
+    if (powerState === true) {
+      magicLed.emit({ color: 'blue', on: true });
+    } else {
+      magicLed.emit({ color: 'blue', on: false });
+    }
+  }
+
   return {
     onState: (state) => console.log('State has changed')
   }

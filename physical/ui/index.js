@@ -136,7 +136,12 @@ function createLedRGBInstance(spec, publisher, msgClient) {
         stateChangePromise = Promise.resolve({ color: rgb.color() });
         break;
       default:
-        rgb.color(req.params.color);
+        if (req.params.color) {
+          rgb.color(req.params.color);
+        }
+        if (req.params.on != null) {
+          (req.params.on === true) ? rgb.on() : rgb.off();
+        }
         stateChangePromise = Promise.resolve();
     }
 
