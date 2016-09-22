@@ -22,7 +22,6 @@ export default function ({state, dispatch}) {
     <h2>Magic buttons</h2>
     <Tweet
       state={state.magic.tweet}
-      onConnectRequested={ () => dispatch('tweet.connect-requested', window.location.origin) }
       onTweetRequested={ () => dispatch('tweet.tweet') } />
   </div>;
 }

@@ -46,6 +46,11 @@ module.exports.create = function() {
 
   player.status(); // triggers state change with current status
 
+  console.log('magic.tweet', magicTweet.status(state.select('magic', 'tweet'), player));
+
+  // state.select('magic', 'tweet').init(state, player);
+  magicTweet.init(state.select('magic', 'tweet'), player);
+
   fetchServicesAndSetState(this.state.select('config'), this.state.select('services'))
     .then(function (servicesById) {
       // Set a default service on startup so that pressing

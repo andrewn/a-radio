@@ -37,6 +37,13 @@ if (twitterOAuthVerify && twitterOAuthVerify[1]) {
     },
     2000
   );
+} else {
+  setTimeout(
+    () => {
+      handleDispatch('tweet.connect-requested', window.location.origin)
+    },
+    2000
+  );
 }
 
 state.on('update', () => render(state.get(), handleDispatch));

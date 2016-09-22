@@ -18,7 +18,21 @@ function createOAuth(callback) {
 // oauth_token=-hWZogAAAAAAxEALAAABV0lPBAo
 
 module.exports = {
+  init: function (state, player) {
+    const currentState = profile.get('twitter');
+    if (currentState && currentState.oAuthAccessToken) {
+      state.merge(currentState);
+    }
+  },
+  status: function (state, player) {
+    return profile.get('twitter');
+  },
   connect: function (state, player, url) {
+    const currentState = profile.get('twitter');
+    if (currentState && currentState.oAuthAccessToken) {
+      return;
+    }
+
     console.log('CONNECT');
     createOAuth(url).getOAuthRequestToken(function (error, oAuthToken, oAuthTokenSecret, results) {
       console.log('error', error);
@@ -34,9 +48,9 @@ module.exports = {
 
       state.merge(credentials);
 
-      // profile.set({
-      //   twitter: credentials
-      // });
+      // Do not save credentials as they'll expire
+      // and be invalid
+      // profile.set('twitter', state.get());
     });
   },
   verify: function (state, player, oAuthVerifier) {
@@ -60,17 +74,22 @@ module.exports = {
         };
 
         state.merge(credentials);
+
+        profile.set('twitter', state.get());
       }
     );
   },
   trigger: function (state) {
     console.log('TRIGGER');
 
+    const credentials = profile.get('twitter');
+    console.log('...credentials', credentials);
+
     const authCredentials = {
       consumer_key: process.env.TWITTER_CONSUMER_KEY,
       consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-      access_token_key: state.get('oAuthAccessToken'),
-      access_token_secret: state.get('oAuthAccessTokenSecret')
+      access_token_key: credentials.oAuthAccessToken,
+      access_token_secret: credentials.oAuthAccessTokenSecret,
     };
 
     console.log('AUTH', authCredentials);
