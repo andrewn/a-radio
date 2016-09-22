@@ -25,16 +25,21 @@ const MainUi = function ({ user, onClick }) {
   );
 };
 
-export default function ({state, onConnectRequested, onTweetRequested }) {
+export default function ({state, isOn, onConnectRequested, onTweetRequested }) {
   const connect = <Connect
                     authUrl={ state.authUrl }
                     onClick={ onConnectRequested } />;
 
   const mainUi = <MainUi user={ state } onClick={ onTweetRequested } />;
+  let content;
+
+    if (isOn === true) {
+      content = state.oAuthAccessToken ? mainUi : connect
+    }
 
   return (
     <div>
-      { state.oAuthAccessToken ? mainUi : connect }
+      { content }
     </div>
   );
 }

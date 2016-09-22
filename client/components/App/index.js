@@ -21,6 +21,7 @@ export default function ({state, dispatch}) {
       onServiceSelect={ id => dispatch('serviceSelect', id) }/>
     <h2>Magic buttons</h2>
     <Tweet
+      isOn={ state.power }
       state={state.magic.tweet}
       onTweetRequested={ (data) => dispatch('tweet.tweet', data) } />
   </div>;
