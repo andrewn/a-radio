@@ -10,7 +10,23 @@ const Service = ({title, logos, active=false, onClick}) => {
 }
 
 export default function ({services, currentService='', onServiceSelect}) {
-  return <ul className="service-list">
-    {services.map(s => <li key={s.id}><Service {...s} active={currentService === s.id} onClick={ onServiceSelect.bind(null, s.id) }/></li>)}
-  </ul>;
+  return (
+    <div className="service-list-wrapper">
+      <h2 className="service-list-hd">Stations</h2>
+      <ul className={ `service-list is-open` }>
+        {
+          services.map( s => {
+            return (
+              <li key={s.id}>
+                <Service
+                  {...s}
+                  active={currentService === s.id}
+                  onClick={ onServiceSelect.bind(null, s.id) } />
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  );
 }
