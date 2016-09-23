@@ -18,13 +18,24 @@ module.exports = function(state, onMessage) {
     });
   });
 
+  var magicButton = radiodan.button.get('magic');
+  magicButton.on('release', function () {
+    onMessage({
+      type: 'tweet.tweet',
+      data: {
+        mood: magicMood
+      }
+    });
+    updateMagicLedOnPower(powerCursor.get());
+  });
+
   // Dials
-  var lastValue = 0;
+  var lastPowerValue = 0;
   var powerDial = radiodan.rotaryEncoder.get('power');
   powerDial.on('turn', function (evt) {
     // console.log('turn', evt.value);
     if ((evt.value % 10) === 0) {
-      if (evt.value > lastValue) {
+      if (evt.value > lastPowerValue) {
         console.log('Triggering volume increment +');
         onMessage({
           type: 'volumeUp'
@@ -35,7 +46,29 @@ module.exports = function(state, onMessage) {
           type: 'volumeDown'
         });
       }
-      lastValue = evt.value;
+      lastPowerValue = evt.value;
+    }
+  });
+
+  // TODO: Turning should have 3 points and start in
+  //       the middle point (i.e. neutral)
+  var lastMagicValue = 0;
+  var magicMood = 'neutral';
+  var magicDial = radiodan.rotaryEncoder.get('magic');
+  magicDial.on('turn', function (evt) {
+    if ((evt.value % 10) === 0) {
+      if (evt.value > lastMagicValue) {
+        console.log('Positive tweet indication');
+        magicLed.emit({ color: 'green' });
+        magicMood = 'positive';
+        // TODO: Set timeout to reset
+      } else {
+        console.log('Negative tweet indication');
+        magicLed.emit({ color: 'red' });
+        magicMood = 'negative';
+        // TODO: Set timeout to reset
+      }
+      lastMagicValue = evt.value;
     }
   });
 
