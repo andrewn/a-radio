@@ -11,16 +11,16 @@
   display: flex;
   flex-wrap: wrap;
 
-  transition: height 0.2s ease-out;
-}
-
-.service-list.is-closed {
-  height: 0;
+  transition: opacity 0.5s ease-out, height 0.5s ease-out;
   overflow: hidden;
 }
 
+.service-list.is-closed {
+  opacity: 0;
+}
+
 .service-list.is-open {
-  height: auto;
+  opacity: 1;
 }
 
 .service-list-service {

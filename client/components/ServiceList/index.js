@@ -9,24 +9,59 @@ const Service = ({title, logos, active=false, onClick}) => {
   </div>;
 }
 
-export default function ({services, currentService='', onServiceSelect}) {
-  return (
-    <div className="service-list-wrapper">
-      <h2 className="service-list-hd">Stations</h2>
-      <ul className={ `service-list is-open` }>
-        {
-          services.map( s => {
-            return (
-              <li key={s.id}>
-                <Service
-                  {...s}
-                  active={currentService === s.id}
-                  onClick={ onServiceSelect.bind(null, s.id) } />
-              </li>
-            );
-          })
-        }
-      </ul>
-    </div>
-  );
+export default class ServiceList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+      listHeight: 0
+    };
+
+    this.updateComponentHeight = this.updateComponentHeight.bind(this);
+  }
+  componentWillUpdate(nextProps, nextState) {
+    console.log('componentWillUpdate', nextProps, nextState);
+  }
+  updateComponentHeight(isOpening) {
+    console.log('updateComponentHeight');
+    if (isOpening === true) {
+      const currentHeight = this.listEl.style.height;
+      this.listEl.style.height = 'auto';
+      const listHeight = this.listEl.getBoundingClientRect().height;
+      this.listEl.style.height = currentHeight;
+      this.setState({ listHeight });
+    } else {
+      this.setState({ listHeight: 0 });
+    }
+  }
+  render() {
+    const { services, currentService='', onServiceSelect } = this.props;
+    const { isOpen, listHeight } = this.state;
+    const handleToggle = () => {
+      this.updateComponentHeight(!isOpen);
+      this.setState({ isOpen: !isOpen });
+    };
+
+    return (
+      <div className="service-list-wrapper">
+        <h2 className="service-list-hd" onClick={ handleToggle }>Stations</h2>
+        <ul className={ `service-list ${ isOpen === true ? 'is-open' : 'is-closed' }` }
+          ref={ el => this.listEl = el }
+          style={{ height: listHeight }}>
+          {
+            services.map( s => {
+              return (
+                <li key={s.id}>
+                  <Service
+                    {...s}
+                    active={currentService === s.id}
+                    onClick={ onServiceSelect.bind(null, s.id) } />
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    );
+  }
 }
