@@ -2,3 +2,36 @@ body {
   font-size: 16px;
   font-family: --apple-system, sans-serif;
 }
+
+.app > * {
+  height: 100vh;
+
+  transition: opacity 0.4s ease-out;
+}
+
+.app.is-on .off-state {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.app.is-on .on-state {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.app.is-off .off-state {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.app.is-off .on-state {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.off-state {
+  transform: translateY(-100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

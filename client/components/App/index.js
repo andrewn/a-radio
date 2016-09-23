@@ -10,19 +10,24 @@ import Tweet from '../Tweet';
 import styles from './styles.css';
 
 export default function ({state, dispatch}) {
-  return <div className="app">
-    <Stack>
+  return <div className={ `app ${ state.power ? 'is-on' : 'is-off' }`}>
+    <div className="on-state">
+      <Stack>
+        <Power onPower={ () => dispatch('power') } isOn={ state.power } />
+        <Volume value={state.volume} onChange={ vol => dispatch('volume', vol)} />
+      </Stack>
+      <ServiceList
+        services={values(state.services)}
+        currentService={state.currentService}
+        onServiceSelect={ id => dispatch('serviceSelect', id) }/>
+      <h2>Magic buttons</h2>
+      <Tweet
+        isOn={ state.power }
+        state={state.magic.tweet}
+        onTweetRequested={ (data) => dispatch('tweet.tweet', data) } />
+    </div>
+    <div className="off-state">
       <Power onPower={ () => dispatch('power') } isOn={ state.power } />
-      <Volume value={state.volume} onChange={ vol => dispatch('volume', vol)} />
-    </Stack>
-    <ServiceList
-      services={values(state.services)}
-      currentService={state.currentService}
-      onServiceSelect={ id => dispatch('serviceSelect', id) }/>
-    <h2>Magic buttons</h2>
-    <Tweet
-      isOn={ state.power }
-      state={state.magic.tweet}
-      onTweetRequested={ (data) => dispatch('tweet.tweet', data) } />
+    </div>
   </div>;
 }
