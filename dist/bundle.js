@@ -4972,6 +4972,13 @@ if (false) {
   var state = _ref.state;
   var dispatch = _ref.dispatch;
 
+  var magic = state.config.magic && state.config.magic.tweet ? __WEBPACK_IMPORTED_MODULE_0_react__["a" /* default */].createElement(__WEBPACK_IMPORTED_MODULE_6__Tweet__["a" /* default */], {
+    isOn: state.power,
+    state: state.magic.tweet,
+    onTweetRequested: function onTweetRequested(data) {
+      return dispatch('tweet.tweet', data);
+    } }) : null;
+
   return __WEBPACK_IMPORTED_MODULE_0_react__["a" /* default */].createElement(
     'div',
     { className: 'app ' + (state.power ? 'is-on' : 'is-off') },
@@ -4994,12 +5001,7 @@ if (false) {
         onServiceSelect: function onServiceSelect(id) {
           return dispatch('serviceSelect', id);
         } }),
-      __WEBPACK_IMPORTED_MODULE_0_react__["a" /* default */].createElement(__WEBPACK_IMPORTED_MODULE_6__Tweet__["a" /* default */], {
-        isOn: state.power,
-        state: state.magic.tweet,
-        onTweetRequested: function onTweetRequested(data) {
-          return dispatch('tweet.tweet', data);
-        } })
+      magic
     ),
     __WEBPACK_IMPORTED_MODULE_0_react__["a" /* default */].createElement(
       'div',
