@@ -7,6 +7,7 @@ module.exports = function() {
     bbcServicesApi: get('BBC_SERVICES_API'),
     webPort: get('WEB_PORT'),
     services: configFile.services || {},
+    magic: configFile.magic,
   };
 
   validate(config);

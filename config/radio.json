@@ -1,4 +1,7 @@
 {
+  "magic": {
+    "tweet": true
+  },
   "services": {
     "fluxfm": {
       "id": "fluxfm",

@@ -10,6 +10,13 @@ import Tweet from '../Tweet';
 import styles from './styles.css';
 
 export default function ({state, dispatch}) {
+  const magic = state.config.magic && state.config.magic.tweet
+    ? <Tweet
+        isOn={ state.power }
+        state={state.magic.tweet}
+        onTweetRequested={ (data) => dispatch('tweet.tweet', data) } />
+    : null;
+
   return <div className={ `app ${ state.power ? 'is-on' : 'is-off' }`}>
     <div className="on-state">
       <Stack>
@@ -20,10 +27,7 @@ export default function ({state, dispatch}) {
         services={values(state.services)}
         currentService={state.currentService}
         onServiceSelect={ id => dispatch('serviceSelect', id) }/>
-      <Tweet
-        isOn={ state.power }
-        state={state.magic.tweet}
-        onTweetRequested={ (data) => dispatch('tweet.tweet', data) } />
+      { magic }
     </div>
     <div className="off-state">
       <Power onPower={ () => dispatch('power') } isOn={ state.power } />
