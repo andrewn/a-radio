@@ -1,0 +1,50 @@
+.tweet-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 3rem;
+  width: 3rem;
+
+  margin-right: 1rem;
+
+  border: 2px solid #333;
+  border-radius: 50%;
+
+  font-size: 1rem;
+
+  background-color: transparent;
+
+  cursor: pointer;
+
+  opacity: 0.5;
+}
+
+.tweet-button:hover {
+  opacity: 1;
+}
+
+.tweet-button[data-mood='positive'] {
+  border-color: green;
+  color: green;
+}
+
+.tweet-button[data-mood='neutral'] {
+  border-color: blue;
+  color: blue;
+}
+
+.tweet-button[data-mood='negative'] {
+  border-color: red;
+  color: red;
+}
+
+.tweet-label {
+  font-size: 0.9em;
+  text-align: center;
+  color: #666;
+}
+
+.tweet-screen-name {
+  font-weight: bold;
+}

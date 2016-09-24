@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Icon from '../Icon';
+
 import styles from './styles.css';
 
 const Service = ({title, logos, active=false, onClick}) => {
@@ -41,10 +43,13 @@ export default class ServiceList extends React.Component {
       this.updateComponentHeight(!isOpen);
       this.setState({ isOpen: !isOpen });
     };
+    const iconName = isOpen ? "dropdown_up" : "dropdown_down";
 
     return (
       <div className="service-list-wrapper">
-        <h2 className="service-list-hd" onClick={ handleToggle }>Stations</h2>
+        <h2 className="service-list-hd" onClick={ handleToggle }>
+          Stations <Icon name={iconName} className="service-list-icon" />
+        </h2>
         <ul className={ `service-list ${ isOpen === true ? 'is-open' : 'is-closed' }` }
           ref={ el => this.listEl = el }
           style={{ height: listHeight }}>

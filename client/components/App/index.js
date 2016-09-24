@@ -20,7 +20,6 @@ export default function ({state, dispatch}) {
         services={values(state.services)}
         currentService={state.currentService}
         onServiceSelect={ id => dispatch('serviceSelect', id) }/>
-      <h2>Magic buttons</h2>
       <Tweet
         isOn={ state.power }
         state={state.magic.tweet}

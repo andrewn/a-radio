@@ -1,5 +1,9 @@
 import React from 'react';
 
+import Stack from '../Stack';
+
+import styles from './styles.css';
+
 const Connect = function ({ authUrl, onClick }) {
   let content;
   if (authUrl) {
@@ -17,10 +21,22 @@ const Connect = function ({ authUrl, onClick }) {
 const MainUi = function ({ user, onClick }) {
   return (
     <div>
-      Tweeting as { user.screenName }!
-      <button onClick={ () => onClick({ mood: 'positive' }) }>+</button>
-      <button onClick={ () => onClick({ mood: 'neutral' }) }>+/-</button>
-      <button onClick={ () => onClick({ mood: 'negative' }) }>-</button>
+      <h2>Tweet</h2>
+      <Stack group="together">
+        <button
+          className={`tweet-button`}
+          data-mood="positive"
+          onClick={ () => onClick({ mood: 'positive' }) }>+</button>
+        <button
+          className={`tweet-button`}
+          data-mood="neutral"
+          onClick={ () => onClick({ mood: 'neutral' }) }>+/-</button>
+        <button
+          className={`tweet-button`}
+          data-mood="negative"
+          onClick={ () => onClick({ mood: 'negative' }) }>-</button>
+      </Stack>
+      <p className="tweet-label">Tweeting as <span className="tweet-screen-name">{ user.screenName }</span></p>
     </div>
   );
 };

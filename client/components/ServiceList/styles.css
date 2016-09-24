@@ -23,6 +23,10 @@
   opacity: 1;
 }
 
+.service-list-icon {
+  display: inline-block;
+}
+
 .service-list-service {
   position: relative;
   width: 10vw;
